@@ -1,5 +1,5 @@
 -----------------------------------
--- script created by @jonatanfp_ --
+-- script created by @x0jonatanfp --
 -----------------------------------
 
 local properties = {
