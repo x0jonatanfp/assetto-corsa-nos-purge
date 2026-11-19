@@ -1,45 +1,45 @@
 # AGENTS.md · assetto-corsa-nos-purge
 
-Guía para agentes de código. Qué es, cómo se instala y cómo se configura está en `README.md` (y `README.es.md`).
+Guide for coding agents. What it is, how it is installed and how it is configured is in `README.md` (and `README.es.md`).
 
-## Qué es
+## What it is
 
-Un único script Lua (`nos_purge.lua`, 23 líneas) que añade humo tipo NOS Purge a un coche de Assetto Corsa. Usa el sistema de partículas de CSP (Custom Shaders Patch) y se activa con el botón `ExtraE` de Content Manager. No hay build, dependencias ni tests.
+A single Lua script (`nos_purge.lua`, 23 lines) that adds NOS Purge-style smoke to an Assetto Corsa car. It uses CSP's (Custom Shaders Patch) particle system and is activated with the `ExtraE` button in Content Manager. There is no build, no dependencies and no tests.
 
-## Estructura
+## Structure
 
-- `nos_purge.lua`: el script. Define las propiedades de `ac.Particles.Smoke` y, en `script.update`, emite dos columnas de humo cuando `car.extraE` es `true`.
-- `README.md` / `README.es.md`: instalación, configuración de `ext_config.ini`, tabla de propiedades y el script copiado.
-- `assets/`: imagen de la cabecera del README.
+- `nos_purge.lua`: the script. It defines the properties of `ac.Particles.Smoke` and, in `script.update`, emits two columns of smoke when `car.extraE` is `true`.
+- `README.md` / `README.es.md`: installation, `ext_config.ini` configuration, properties table and the copied script.
+- `assets/`: image for the README header.
 - `LICENSE` (MIT).
 
-## Comandos
+## Commands
 
-No hay scripts de build, test ni lint. Las únicas comprobaciones posibles son:
+There are no build, test or lint scripts. The only possible checks are:
 
-- Revisar la sintaxis Lua a mano o con un linter de Lua, si el entorno lo tiene. No se ha configurado ninguno en el repo.
-- Probarlo en el juego: copiar `nos_purge.lua` a la carpeta `extension` de un coche, añadir la entrada `[SCRIPT_0]` a su `ext_config.ini`, activar `ExtraE` en Content Manager y conducir. Esta es la única verificación real.
+- Reviewing the Lua syntax by hand or with a Lua linter, if the environment has one. None is configured in the repo.
+- Testing in the game: copy `nos_purge.lua` to the `extension` folder of a car, add the `[SCRIPT_0]` entry to its `ext_config.ini`, activate `ExtraE` in Content Manager and drive. This is the only real verification.
 
-## Cómo probar un cambio
+## How to test a change
 
-- No hay tests automáticos. Documenta en el PR o commit qué se probó en el juego: coche, versión de CSP y si se vio el humo.
-- Un cambio que solo toca valores (`color`, `thickness`, `life`, `size`, `spreadK`, `growK`, `targetYVelocity`) debe comprobarse visualmente; no se puede verificar desde el repo.
+- There are no automated tests. Document in the PR or commit what was tested in the game: car, CSP version and whether the smoke was seen.
+- A change that only touches values (`color`, `thickness`, `life`, `size`, `spreadK`, `growK`, `targetYVelocity`) must be checked visually; it cannot be verified from the repo.
 
-## Convenciones
+## Conventions
 
-- Lua con el API de CSP (`ac.Particles.Smoke`, `script.update`, `car.extraE`, `rgbm`, `vec3`). Ese API depende de la versión de CSP; no lo asumas sin consultar su documentación.
-- Comentarios y nombres de propiedades, en inglés, como están en el script. La documentación del README va en inglés y español (`README.md` y `README.es.md`); cambia los dos a la vez.
-- Sin versión ni CHANGELOG en el repo.
+- Lua with the CSP API (`ac.Particles.Smoke`, `script.update`, `car.extraE`, `rgbm`, `vec3`). That API depends on the CSP version; do not assume it without checking its documentation.
+- Comments and property names are in English, as they are in the script. The README documentation is in English and Spanish (`README.md` and `README.es.md`); change both at the same time.
+- No version or CHANGELOG in the repo.
 
-## Decisiones y trampas
+## Decisions and pitfalls
 
-- **Coordenadas fijas.** Las dos columnas de humo se emiten desde `vec3(-0.68, 0.95, 0.7)` y `vec3(0.68, 0.95, 0.7)`, con velocidades fijas. Están codificadas para la carrocería de un modelo concreto [inferencia: ajustadas a un coche de ejemplo]. Cambiar de coche exige recalcularlas.
-- **Valores del README sincronizados con el script.** La tabla de propiedades del README refleja los valores de `nos_purge.lua`. Si cambias uno, cambia la tabla y el bloque de código de los dos README.
-- **Activación.** El script solo emite si `car.extraE` es `true`. Sin la tecla `ExtraE` activa en Content Manager no aparece nada, aunque el script esté bien.
-- **`ext_config.ini`.** La entrada `[SCRIPT_0]` tiene `ACTIVE_FOR_NEAREST=4` y `ACTIVE_FOR_UNFOCUSED=1` según el README; cambiarlos afecta a qué coches ejecutan el script.
-- **Rendimiento.** El README lo describe como ligero. No hay medida en el repo: no lo afirmes sin probarlo.
+- **Fixed coordinates.** The two smoke columns are emitted from `vec3(-0.68, 0.95, 0.7)` and `vec3(0.68, 0.95, 0.7)`, with fixed velocities. They are hard-coded for the bodywork of a specific model [inference: adjusted to an example car]. Changing car requires recalculating them.
+- **README values in sync with the script.** The README properties table reflects the values in `nos_purge.lua`. If you change one, change the table and the code block in both READMEs.
+- **Activation.** The script only emits if `car.extraE` is `true`. Without the `ExtraE` key active in Content Manager nothing appears, even if the script is correct.
+- **`ext_config.ini`.** The `[SCRIPT_0]` entry has `ACTIVE_FOR_NEAREST=4` and `ACTIVE_FOR_UNFOCUSED=1` according to the README; changing them affects which cars run the script.
+- **Performance.** The README describes it as lightweight. There is no measurement in the repo: do not claim it without testing.
 
-## Mantenimiento
+## Maintenance
 
-- Este fichero y el `README.md` se actualizan en el mismo cambio que los deja obsoletos.
-- Aquí solo va lo que puede ser público: nada de rutas locales, puertos de la máquina, IPs, perfiles de secretos ni datos personales.
+- This file and the `README.md` are updated in the same change that makes them outdated.
+- Only publishable content goes here: no local paths, machine ports, IPs, secret profiles or personal data.
