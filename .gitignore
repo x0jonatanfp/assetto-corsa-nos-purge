@@ -1,0 +1,5 @@
+
+# secretos locales (las plantillas .env.example sí se versionan)
+.env
+.env.*
+!.env.example
