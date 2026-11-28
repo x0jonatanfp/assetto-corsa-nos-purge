@@ -11,6 +11,7 @@ A single Lua script (`nos_purge.lua`, 23 lines) that adds NOS Purge-style smoke 
 - `nos_purge.lua`: the script. It defines the properties of `ac.Particles.Smoke` and, in `script.update`, emits two columns of smoke when `car.extraE` is `true`.
 - `README.md` / `README.es.md`: installation, `ext_config.ini` configuration, properties table and the copied script.
 - `assets/`: image for the README header.
+- `VERSION`, `.versionrc.json`, `Makefile`: release tooling.
 - `LICENSE` (MIT).
 
 ## Commands
@@ -29,7 +30,7 @@ There are no build, test or lint scripts. The only possible checks are:
 
 - Lua with the CSP API (`ac.Particles.Smoke`, `script.update`, `car.extraE`, `rgbm`, `vec3`). That API depends on the CSP version; do not assume it without checking its documentation.
 - Comments and property names are in English, as they are in the script. The README documentation is in English and Spanish (`README.md` and `README.es.md`); change both at the same time.
-- No version or CHANGELOG in the repo.
+- Version in `VERSION` and `CHANGELOG.md`, both written by `commit-and-tag-version` through `make release` (configuration in `.versionrc.json`); never edited by hand.
 
 ## Decisions and pitfalls
 
